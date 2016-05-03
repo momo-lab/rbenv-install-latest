@@ -23,9 +23,9 @@ get_version() {
   local query=$1
   [[ -z $query ]] && query=$DEFAULT_QUERY
   rbenv install --list \
+    | grep -vE "(^Available versions:|dev|preview|rc)" \
+    | grep -E "^\s*$query" \
     | sed 's/^\s\+//' \
-    | grep -vE "(dev|preview|rc)" \
-    | grep -E "^$query" \
     | tail -1
 }
 
