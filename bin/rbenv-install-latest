@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: rbenv install-latest [<version-prefix>]
+# Usage: rbenv install-latest [<`rbenv install` options>] [<version-prefix>]
 set -e
 [ -n "$RBENV_DEBUG" ] && set -b
 
@@ -18,14 +18,6 @@ require_plugin() {
   fi
 }
 require_plugin ruby-build https://github.com/rbenv/ruby-build.git
-
-main() {
-  local latest=$(get_version $1)
-  [[ -z $latest ]] && { echo "Ruby version is not found." >&2; exit 1; }
-  if confirm "Install $latest?"; then
-    rbenv install $latest
-  fi
-}
 
 get_version() {
   local query=$1
@@ -60,7 +52,12 @@ for arg; do
       rbenv-help install-latest
       exit 0
       ;;
+    -*)
+      install_args="$install_args $arg"
+      shift
   esac
 done
 
-main $*
+latest=$(get_version $1)
+[[ -z $latest ]] && { echo "Ruby version is not found." >&2; exit 1; }
+rbenv install $install_args $latest
