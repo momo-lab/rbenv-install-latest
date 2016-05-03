@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+# Usage: rbenv install-latest [<version-prefix>]
 set -e
 [ -n "$RBENV_DEBUG" ] && set -b
 
+RBENV_INSTALL_LATEST_VERSION="0.1.0"
 DEFAULT_QUERY=2
 
 # require plugin check
@@ -43,5 +45,22 @@ confirm() {
     *) return 1 ;;
   esac
 }
+
+version() {
+  echo "rbenv-install-latest ${RBENV_INSTALL_LATEST_VERSION}"
+}
+
+for arg; do
+  case "$arg" in
+    --version|version)
+      version
+      exit 0
+      ;;
+    --help|help)
+      rbenv-help install-latest
+      exit 0
+      ;;
+  esac
+done
 
 main $*
