@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RBENV_DEBUG" ] && set -b
+
+DEFAULT_QUERY=2
+
+main() {
+  latest=$(get_version $1)
+  [[ -z $latest ]] && { echo "Ruby version not found." 1>&2; exit 1; }
+  if confirm "Install $latest?"; then
+    rbenv install $latest
+  fi
+}
+
+get_version() {
+  query=$1
+  [[ -z $query ]] && query=$DEFAULT_QUERY
+  rbenv install --list \
+    | sed 's/^\s\+//' \
+    | grep -vE "(dev|preview|rc)" \
+    | grep -E "^$query" \
+    | tail -1
+}
+
+confirm() {
+  local line
+  read -p "$1 (y/N)" line
+  case "$line" in
+    [Yy]*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+main $*
