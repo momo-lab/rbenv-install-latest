@@ -29,15 +29,6 @@ get_version() {
     | tail -1
 }
 
-confirm() {
-  local line
-  read -p "$1 (y/N)" line
-  case "$line" in
-    [Yy]*) return 0 ;;
-    *) return 1 ;;
-  esac
-}
-
 version() {
   echo "rbenv-install-latest ${RBENV_INSTALL_LATEST_VERSION}"
 }
