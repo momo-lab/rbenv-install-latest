@@ -4,6 +4,19 @@ set -e
 
 DEFAULT_QUERY=2
 
+# require plugin check
+# ref) https://github.com/toy/rbenv-update-rubies/blob/master/bin/rbenv-update-rubies
+require_plugin() {
+  local name=$1
+  local url=$2
+  if [[ ! -d "$RBENV_ROOT/plugins/$name" ]]; then
+    echo "$name plugin is required, run following command to install:" >&2
+    printf "git clone %s %s\n" "$url" "$RBENV_ROOT/plugins/$name" >&2
+    exit 1
+  fi
+}
+require_plugin ruby-build https://github.com/rbenv/ruby-build.git
+
 main() {
   local latest=$(get_version $1)
   [[ -z $latest ]] && { echo "Ruby version is not found." >&2; exit 1; }
