@@ -6,6 +6,12 @@ set -e
 RBENV_INSTALL_LATEST_VERSION="0.1.0"
 DEFAULT_QUERY=2
 
+# Provide rbenv completions
+if [ "$1" = "--complete" ]; then
+  rbenv install --complete
+  exit
+fi
+
 # require plugin check
 # ref) https://github.com/toy/rbenv-update-rubies/blob/master/bin/rbenv-update-rubies
 require_plugin() {
