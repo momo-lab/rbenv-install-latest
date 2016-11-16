@@ -3,8 +3,14 @@
 set -e
 [ -n "$RBENV_DEBUG" ] && set -b
 
-RBENV_INSTALL_LATEST_VERSION="0.1.0"
-DEFAULT_QUERY=2
+RBENV_INSTALL_LATEST_VERSION="0.2.0"
+DEFAULT_QUERY="[0-9]"
+
+# Provide rbenv completions
+if [ "$1" = "--complete" ]; then
+  rbenv install --complete
+  exit
+fi
 
 # require plugin check
 # ref) https://github.com/toy/rbenv-update-rubies/blob/master/bin/rbenv-update-rubies
