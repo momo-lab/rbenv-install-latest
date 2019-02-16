@@ -1,3 +1,5 @@
+This plugin is deprecated. Please use [xxenv-latest](https://github.com/momo-lab/xxenv-latest)
+
 # rbenv-install-latest
 
 This [rbenv](https://rbenv.org) plugin to install the latest version of Ruby using [ruby-build](https://github.com/rbenv/ruby-build).
